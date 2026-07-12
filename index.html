@@ -133,11 +133,15 @@ body.lit .wordmark { color: var(--text); }
 .cord-word {
   font-family: "Fraunces", Georgia, serif;
   font-style: italic;
-  font-size: 15px;
+  font-size: 16px;
   letter-spacing: .02em;
-  fill: rgba(116, 80, 38, .5);
+  fill: rgba(94, 62, 26, .95);
+  /* A soft paper halo drawn under the letters, so the wire never cuts them. */
+  paint-order: stroke fill;
+  stroke: var(--paper);
+  stroke-width: 4.5px;
+  stroke-linejoin: round;
 }
-.cord-word.pale { fill: rgba(228, 200, 156, .42); }
 
 main { position: relative; z-index: 2; }
 
@@ -336,6 +340,35 @@ main { position: relative; z-index: 2; }
   background: radial-gradient(85% 62% at 50% 42%, rgba(var(--amber), .30), rgba(var(--amber-lo), .12) 44%, rgba(247, 234, 214, 0) 72%);
 }
 #cta .h-cta { color: var(--text); text-shadow: 0 0 70px rgba(var(--amber), .35); }
+
+/* ------------------------------------------------------------------ */
+/* Scene 10. The finale. The wire reaches the inner child.             */
+/* ------------------------------------------------------------------ */
+#reach {
+  background: radial-gradient(78% 60% at 50% 42%, rgba(var(--amber), .28), rgba(247, 234, 214, 0) 70%);
+}
+.child-stage {
+  width: min(360px, 82vw);
+  margin: 0 auto clamp(20px, 4vh, 40px);
+  position: relative;
+}
+.child-stage svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+/* The warm halo breathes. */
+.cs-glow { transform-box: fill-box; transform-origin: center; animation: csHalo 5.2s var(--ease) infinite; }
+@keyframes csHalo { 0%,100% { opacity: .6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+
+/* The receiver sways on its wire, as if just lowered. */
+.cs-swing { transform-box: fill-box; transform-origin: top center; animation: csSwing 5s ease-in-out infinite; }
+@keyframes csSwing { 0%,100% { transform: rotate(-2.4deg); } 50% { transform: rotate(2.4deg); } }
+
+/* The child breathes, and the reaching arm lifts a touch. */
+.cs-child { transform-box: fill-box; transform-origin: bottom center; animation: csBreathe 6.5s ease-in-out infinite; }
+@keyframes csBreathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* A ring pulses out from the receiver, the phone inviting a hand. */
+.cs-ring { transform-box: fill-box; transform-origin: center; animation: csRing 3s ease-out infinite; }
+@keyframes csRing { 0% { opacity: .55; transform: scale(.5); } 70% { opacity: 0; transform: scale(1.5); } 100% { opacity: 0; transform: scale(1.5); } }
 
 .signup { margin: clamp(30px, 5vh, 52px) auto 0; max-width: 440px; width: 100%; text-align: left; display: grid; gap: 16px; }
 .field { display: grid; gap: 7px; }
@@ -595,6 +628,64 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
     </div>
   </section>
 
+  <!-- 10. The finale. The wire reaches the child you were. -->
+  <section id="reach" class="scene">
+    <p class="kicker reveal">The connection was never cut</p>
+
+    <div class="child-stage reveal" data-d="1" aria-hidden="true">
+      <svg viewBox="0 0 360 400" role="img" aria-label="A small child reaching up to take a telephone receiver lowered on a coiled cord.">
+        <defs>
+          <radialGradient id="csGlow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="rgba(255,214,150,0.55)"/>
+            <stop offset="0.62" stop-color="rgba(255,214,150,0)"/>
+          </radialGradient>
+          <linearGradient id="csRec" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3a3a3a"/><stop offset="1" stop-color="#0a0a0a"/>
+          </linearGradient>
+          <linearGradient id="csChild" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#39281a"/><stop offset="1" stop-color="#1d1109"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse class="cs-glow" cx="182" cy="208" rx="150" ry="150" fill="url(#csGlow)"/>
+        <ellipse cx="168" cy="378" rx="74" ry="12" fill="rgba(50,32,14,0.22)"/>
+
+        <!-- The inner child. A gender neutral silhouette, reaching up. -->
+        <g class="cs-child">
+          <g fill="none" stroke="url(#csChild)" stroke-linecap="round">
+            <line x1="165" y1="276" x2="165" y2="322" stroke-width="44"/>
+            <line x1="156" y1="320" x2="150" y2="370" stroke-width="17"/>
+            <line x1="176" y1="320" x2="182" y2="370" stroke-width="17"/>
+            <line x1="150" y1="288" x2="137" y2="324" stroke-width="14"/>
+            <line class="cs-arm" x1="181" y1="286" x2="214" y2="188" stroke-width="15"/>
+          </g>
+          <circle cx="165" cy="250" r="25" fill="url(#csChild)"/>
+          <path d="M150,240 A25,25 0 0 1 180,238" fill="none" stroke="rgba(255,214,160,0.4)" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+
+        <!-- The receiver, lowered on the coiled wire to meet the reaching hand. -->
+        <g class="cs-swing">
+          <path d="M186,4 C210,12 210,32 188,36 C166,40 166,60 190,64 C214,68 214,88 191,94 C168,99 172,118 198,126 C212,131 217,140 219,148"
+                fill="none" stroke="#141414" stroke-width="6" stroke-linecap="round"/>
+          <path d="M186,4 C210,12 210,32 188,36 C166,40 166,60 190,64 C214,68 214,88 191,94 C168,99 172,118 198,126 C212,131 217,140 219,148"
+                fill="none" stroke="rgba(244,220,176,0.5)" stroke-width="1.4" stroke-linecap="round" transform="translate(-1,-1)"/>
+          <circle class="cs-ring" cx="221" cy="158" r="19" fill="none" stroke="rgba(214,150,74,0.7)" stroke-width="2"/>
+          <g transform="rotate(-20 221 158)">
+            <path d="M201,158 C201,149 241,149 241,158 L237,160 C235,153 207,153 205,160 Z" fill="url(#csRec)" stroke="#000" stroke-width="1"/>
+            <ellipse cx="201" cy="158" rx="14" ry="11" fill="url(#csRec)" stroke="#000" stroke-width="1"/>
+            <ellipse cx="201" cy="158" rx="7" ry="5.5" fill="#060606"/>
+            <ellipse cx="241" cy="158" rx="14" ry="11" fill="url(#csRec)" stroke="#000" stroke-width="1"/>
+            <ellipse cx="241" cy="158" rx="7" ry="5.5" fill="#060606"/>
+            <ellipse cx="221" cy="151" rx="18" ry="4" fill="rgba(255,255,255,0.18)"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <h2 class="display h-big reveal" data-d="1">Meet the child you were.</h2>
+    <p class="body wide reveal" data-d="2">The Landline is a line to your inner child. Pick up, and say the thing they always needed to hear.</p>
+  </section>
+
 </main>
 
 <footer>
@@ -649,7 +740,10 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
     /* Begin near the base of the hero and run to just above the footer. */
     cordTop = Math.round(window.innerHeight * 0.72);
     var footer = document.querySelector("footer");
-    var endY = footer ? footer.offsetTop - 40 : docH - 60;
+    /* The wire ends where the child reaches for the receiver. */
+    var reach = document.getElementById("reach");
+    var endY = reach ? reach.offsetTop + reach.offsetHeight * 0.30
+             : (footer ? footer.offsetTop - 40 : docH - 60);
     var H = docH;
 
     cordLayer.style.height = H + "px";
@@ -741,7 +835,7 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
         var fromTop = y - cordTop;
         var fromEnd = P.endY - y;
         op = Math.min(fromHead / 160, fromTop / 200, fromEnd / 200, 1);
-        op = Math.max(0, Math.min(1, op)) * 0.6;
+        op = Math.max(0, Math.min(1, op)) * 0.95;
       }
       w.text.style.opacity = op.toFixed(2);
     }
@@ -763,16 +857,41 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
     });
   }
 
+  /* Fallback for any view that does not pass scrolling through, such as an   */
+  /* embedded frame sized to the full page. Show the whole wire and its words */
+  /* so the cord is never invisible, then hand control back on a real scroll. */
+  function drawStatic() {
+    cordShadow.style.strokeDashoffset = 0;
+    cordBody.style.strokeDashoffset = 0;
+    cordHi.style.strokeDashoffset = 0;
+    cordTip.style.opacity = 0;
+    for (var i = 0; i < wordEls.length; i++) {
+      var w = wordEls[i];
+      var y = cordTop + w.base * P.span;
+      w.text.setAttribute("x", midAt(y).toFixed(1));
+      w.text.setAttribute("y", (y + 5).toFixed(1));
+      w.text.style.opacity = "0.85";
+    }
+  }
+
+  function scrollable() { return (root.scrollHeight - window.innerHeight) > 60; }
+  var userScrolled = false;
+  function applyMode() {
+    if (reduce) { drawStatic(); return; }
+    if (userScrolled || scrollable()) { cordTip.style.opacity = ""; onScroll(); }
+    else { drawStatic(); }
+  }
+
   var rebuildTimer = null;
-  function rebuild() { buildCord(); onScroll(); }
+  function rebuild() { buildCord(); applyMode(); }
   buildCord();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", function () { userScrolled = true; onScroll(); }, { passive: true });
   window.addEventListener("resize", function () {
     clearTimeout(rebuildTimer);
     rebuildTimer = setTimeout(rebuild, 180);
   }, { passive: true });
-  window.addEventListener("load", function () { setTimeout(rebuild, 100); });
-  onScroll();
+  window.addEventListener("load", function () { setTimeout(rebuild, 120); });
+  applyMode();
 
   /* Reveal on descent, for both fades and line masks. */
   var items = document.querySelectorAll(".reveal, .clip");
