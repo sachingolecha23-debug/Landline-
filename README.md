@@ -2,7 +2,14 @@
 
 A single page awareness site for The Landline, a listening movement incubated by Mini Miles.
 
-Phase 1 only. Awareness and belief, not transactions. The page is a short scroll story: it opens in the dark with a phone that makes one call, walks the reader through why the earliest years of a life matter and what most of us quietly carry from them, then resolves into warm light with one invitation: pick up.
+Phase 1 only. Awareness and belief, not transactions. The page is a cinematic scroll story: it opens in the dark with a real 3D rotary phone, rolls the years backward to when you were seven, walks the reader through why the earliest years of a life matter and the questions we ask at the receiver, then resolves into warm light with one invitation: pick up.
+
+## The cinematic pieces
+
+- A 3D black rotary phone in the hero, built and lit in WebGL (Three.js r152, embedded in the file). It idles, answers the mouse, and dips away as you scroll. Small screens, reduced motion and missing WebGL all fall back to the drawn phone.
+- The years odometer: a pinned scene where giant years roll backward to "the year you were seven" as the dark turns to paper.
+- The operator questions: a pinned scene showing one question at a time.
+- The coiled cord that threads the whole page, with words riding it, ending at the inner child reaching for the receiver.
 
 ## Running it
 
