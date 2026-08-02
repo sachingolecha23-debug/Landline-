@@ -44,8 +44,8 @@
   --paper-deep: #EAE3D5;
   --paper-warm: #F7EAD6;   /* the light near the end */
   --text: #1A1714;         /* near black text on paper, high contrast */
-  --text-soft: #5B534A;
-  --text-faint: #948A7C;
+  --text-soft: #554C42;
+  --text-faint: #7C7263;   /* kept above 4.5 to 1 on paper for small text */
   --onink: #F1ECE3;        /* text on the dark hero */
   --onink-soft: #A7A097;
 
@@ -71,6 +71,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 ::selection { background: rgba(var(--amber), .28); color: #000; }
+
+/* Keyboard focus is always visible, in the same warm voice as the rest. */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid rgba(var(--amber), .95);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
 
 /* ------------------------------------------------------------------ */
 /* Wordmark                                                            */
@@ -368,6 +375,7 @@ main { position: relative; z-index: 2; }
 .field { display: grid; gap: 7px; }
 .field label { font-family: ui-monospace, Menlo, monospace; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-soft); }
 .field .opt { text-transform: none; letter-spacing: .02em; font-style: italic; color: var(--text-faint); }
+.field .req { color: rgba(120, 78, 24, 1); }
 .field input, .field textarea {
   width: 100%; background: rgba(255,255,255,.62);
   border: 1px solid rgba(26,23,20,.16); border-radius: 11px;
@@ -430,6 +438,25 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
 .sound-toggle.on .bars i:nth-child(2){ animation-delay: .2s; }
 .sound-toggle.on .bars i:nth-child(3){ animation-delay: .4s; }
 @keyframes eq { 0%,100% { height: 3px; } 50% { height: 12px; } }
+
+/* A quiet chapter CTA: an early chance to pick up, without shouting.  */
+.mini-pick {
+  margin-top: clamp(34px, 5vh, 54px);
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: .7rem; letter-spacing: .34em; text-transform: uppercase;
+  color: var(--text-soft); text-decoration: none;
+  border: 1px solid rgba(26, 23, 20, .2); border-radius: 40px;
+  padding: 13px 24px 13px 20px;
+  transition: color .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.mini-pick:hover { color: var(--text); border-color: rgba(var(--amber), .7); box-shadow: 0 0 24px rgba(var(--amber), .25); }
+.mini-pick .pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(var(--amber), 1);
+  box-shadow: 0 0 10px rgba(var(--amber), .9);
+  animation: cue 2.6s var(--ease) infinite;
+}
 
 /* ------------------------------------------------------------------ */
 /* Progress hairline. A warm wire growing across the top of the page.  */
@@ -729,6 +756,7 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
       <span class="clip" data-d="2"><span>is <span class="em">seven</span> right now.</span></span>
     </h2>
     <p class="body wide reveal" data-d="3">Whatever you needed to hear back then, someone small needs to hear from you today. That is the whole point of picking up.</p>
+    <a class="mini-pick reveal" data-d="3" href="#cta"><span class="pulse" aria-hidden="true"></span>ready? pick up</a>
   </section>
 
   <!-- 8. What it is in the world. -->
@@ -751,18 +779,18 @@ footer a:hover { border-color: rgba(var(--amber-lo), .8); }
 
     <form class="signup reveal" data-d="2" id="signupForm" novalidate>
       <div class="field" id="f-name">
-        <label for="name">Your name</label>
-        <input type="text" id="name" name="name" autocomplete="name" placeholder="What should we call you" />
+        <label for="name">Your name <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" autocomplete="name" required aria-required="true" placeholder="What should we call you" />
         <span class="err" data-err></span>
       </div>
       <div class="field" id="f-contact">
-        <label for="contact">Email or WhatsApp number</label>
-        <input type="text" id="contact" name="contact" autocomplete="email" placeholder="you@somewhere.in or +91 ..." />
+        <label for="contact">Email or WhatsApp number <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="contact" name="contact" autocomplete="email" required aria-required="true" placeholder="you@somewhere.in or +91 ..." />
         <span class="err" data-err></span>
       </div>
       <div class="field" id="f-city">
-        <label for="city">City</label>
-        <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Where are you" />
+        <label for="city">City <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="city" name="city" autocomplete="address-level2" required aria-required="true" placeholder="Where are you" />
         <span class="err" data-err></span>
       </div>
       <div class="field" id="f-message">
